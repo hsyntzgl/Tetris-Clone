@@ -2,11 +2,11 @@
 **A clone of Tengen Tetris with Super Rotation System**
 <hr>
 
-### What is Super Rotation System
+### What is Super Rotation System ?
 
 <br>
 
-Rotation system for tetrominos. For each tetromino, the center point is determined and the tetromino is rotated around that point at a 90-degree angle.
+In the Rotation System for tetrominos, the center point is determined for each tetromino and the tetromino is rotated around the determined center point at a 90-degree angle.
 
 ![Super Rotation System](https://tetris.wiki/images/3/3d/SRS-pieces.png)
 
@@ -17,7 +17,7 @@ Rotation system for tetrominos. For each tetromino, the center point is determin
 
 <br>
 
-Musics and effects taken from **Tengen Tetris**
+Musics and effects are taken from **Tengen Tetris**
 
 <a href ="https://www.youtube.com/watch?v=itH8IrY1GtM&list=PLF98CC5A36A807B34">Tengen Tetris Ost</a>
 
