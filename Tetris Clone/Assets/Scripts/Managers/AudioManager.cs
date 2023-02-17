@@ -102,6 +102,15 @@ public class AudioManager : MonoBehaviour
 
         return levelUpEffect.length;
     }
+    public float GameOverMusic()
+    {
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop(); 
+        }
+        audioSource.PlayOneShot(gameOverEffect);
+        return gameOverEffect.length;
+    }
     private void SceneChanged(Scene current, Scene next)
     {
         if (audioSource.clip != null)

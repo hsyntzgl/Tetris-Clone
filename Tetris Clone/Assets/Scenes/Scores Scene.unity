@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30dc2a94b60174b4db1a8d61dddd7a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineTextsGUI:
+  scoreTextsGUI:
   - {fileID: 1574248344}
   - {fileID: 1741717942}
   - {fileID: 1901749529}

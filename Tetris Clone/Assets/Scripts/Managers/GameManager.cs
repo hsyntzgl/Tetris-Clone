@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public bool skipBonusPanel;
 
     [SerializeField] private GameObject bonusPanel;
+    [SerializeField] private GameObject gameOverPanel;
 
     [SerializeField] private AudioClip levelUpEffect, gameOverEffect;
 
@@ -21,13 +22,19 @@ public class GameManager : MonoBehaviour
 
     private bool pause;
     private bool gameOver = false;
+    private bool gameOverCoroutineFinish = false;
 
     private int level;
-    private int score = 000000;
+    private int score = 0;
 
     private int totalLineCount;
 
     private int singleCount, doubleCount, tripleCount, tetrisCount;
+
+    private readonly int lastLevel = 17;
+    private readonly int secondPhaseAfterThisLevel = 5;
+    private readonly int levelUpLimitForPhaseOne = 30;
+    private readonly int levelUpLimitForPhaseTwo = 50;
 
     public int Level
     {
@@ -89,7 +96,7 @@ public class GameManager : MonoBehaviour
     }
     public Color LevelColor
     {
-        get => levelColors[level];
+        get => levelColors[(level % (lastLevel - 1))];
     }
 
     public bool Pause
@@ -112,7 +119,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameOver && Input.anyKeyDown)
+        if (gameOver && Input.anyKeyDown && gameOverCoroutineFinish)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
@@ -121,20 +128,23 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameOver = true;
-        AudioManager.instance.PlayEffectAndEndMusic(gameOverEffect);
+        gameOverPanel.SetActive(true);
+        StartCoroutine(GameOverCoroutine());
     }
     private void CheckLevel()
     {
-        if (level <= 4)
+        int levelNotIndex = level + 1;
+        if (levelNotIndex <= secondPhaseAfterThisLevel)
         {
-            if (totalLineCount >= (level * 5) + 5)
+            if (totalLineCount >= levelNotIndex * levelUpLimitForPhaseOne)
             {
                 StartCoroutine(LevelUp());
             }
         }
         else
         {
-            if (totalLineCount >= (level * 30) - 50)
+            int subLevelForPhaseTwo = levelNotIndex - 5;
+            if (totalLineCount >= ((levelNotIndex * levelUpLimitForPhaseOne) + (subLevelForPhaseTwo * levelUpLimitForPhaseTwo)))
             {
                 StartCoroutine(LevelUp());
             }
@@ -152,6 +162,14 @@ public class GameManager : MonoBehaviour
         doubleCount = 0;
         tripleCount = 0;
         tetrisCount = 0;
+    }
+    private IEnumerator GameOverCoroutine()
+    {
+        gameOverCoroutineFinish = (gameOverCoroutineFinish) ? false : gameOverCoroutineFinish;
+
+        yield return new WaitForSeconds(AudioManager.instance.GameOverMusic());
+
+        gameOverCoroutineFinish = true;
     }
     private IEnumerator LevelUp()
     {
