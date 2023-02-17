@@ -43,4 +43,4 @@ Arrow keys and Spacebar
 
 <hr>
 
-*This game made with Unity3D Game Engine*
+*Made with Unity3D Game Engine*
